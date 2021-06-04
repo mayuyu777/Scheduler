@@ -26,6 +26,7 @@
     .navicon{color: rgba(0, 0, 0, 0.494);}
     .eventsofday{background-color: rgba(164, 175, 199, 0.35); margin-bottom: 10px;height: 50px;padding-top: 10px;border-radius: 3px;}
     .eventdaybutton{float: right;margin-left: 10px;border: none; border-radius: 3px; color: rgba(255, 255, 255, 0.83);background-color: rgb(42, 125, 189);width: 70px;}
+    .divcon{width: 15pc;overflow: hidden;display:inline-block;}
   </style>
 
 	</head>
@@ -243,8 +244,9 @@
           var div = document.createElement('div');
           div.className = "col eventsofday";
           div.id = childs[i].id;
-          var content = document.createElement('label');
+          var content = document.createElement('div');
           content.innerHTML = childs[i].innerHTML;
+          content.className = "divcon";
           var edit = document.createElement('button');
           var deleteevent = document.createElement('button');
           edit.textContent = " Edit";
@@ -284,8 +286,9 @@
     }
     function saveEvent(elem){
       var childs = elem.children;
-      var content = document.createElement('label');
+      var content = document.createElement('div');
       content.innerHTML = childs[0].value;
+      content.className = "divcon"; 
 
       childs[0].replaceWith(content);
       changeEventButtons(elem);
@@ -319,6 +322,15 @@
         container.removeChild(container.lastChild);
       }
     }
+
+    $(document).ready(function(){
+    $(".eventcontainer").click(function(){
+        $("#Modal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+});
   </script>
 	</body>
 </html>
