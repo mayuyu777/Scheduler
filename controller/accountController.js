@@ -83,6 +83,11 @@ exports.showregister = async(req,res)=>{
     }
 }
 
+exports.logout = async(req,res)=>{
+    req.session.destroy();
+    res.redirect("/");
+}
+
 generateCode = () => {
     let generate = "";
     const char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

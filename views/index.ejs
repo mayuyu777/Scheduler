@@ -51,14 +51,7 @@
             </div>
             </a>
           </div>
-          <div class="p-2 menu">
-            <a href="/bin">
-            <div class="d-flex justify-content-start">
-              <i class="fas fa-trash fa-lg menu_icon"></i>
-              <h6 class="menu_text">Bin</h6>
-            </div>
-            </a>
-        </div>
+         
         <div class="p-2 menu" style="height: 1pc;border-bottom: 2px solid rgba(89, 86, 86, 0.789);margin-bottom: 0.5pc;"></div>
         <div class="p-2 menu menu_title">Account</div>
         <div class="p-2 menu">
@@ -89,78 +82,44 @@
           <div style="height: 15%;padding-top: 25px;" class="container"> 
             <div class="row align-items-center">
               <div class="col" style="margin-left: -1.5pc;margin-top: 1pc;"><button class="navbutton"><i class="fas fa-chevron-left fa-lg navicon"></i></button><button class="navbutton"><i class="fas fa-chevron-right fa-lg navicon"></i></button></div>
-              <div class="col" style="margin-left: -13pc;margin-top: -2pc;"><label style="font-size: 30px;font-weight: bold;color: rgba(0, 0, 0, 0.782);">May 2020</label></div>
+              <div class="col" style="margin-left: -13pc;margin-top: -2pc;"><label style="font-size: 30px;font-weight: bold;color: rgba(0, 0, 0, 0.782);"><%= curmonth +" "+year%></label></div>
             </div>
           </div>
           <div style="height: 85%;">
             <table>
               <thead>
                 <tr>
-                  <th >Sun</th>
-                  <th>Mon</th>
-                  <th>Tue</th>
-                  <th>Wed</th>
-                  <th>Thu</th>
-                  <th>Fri</th>
-                  <th>Sat</th>
+                  <% var week = ['SUN',"MON","TUE","WED","THUR","FRI","SAT"];
+                    var g;
+                    var j = dayofweek;
+                   for(g=0;g < 7;g++,j=(j+1)%7){ %>
+                          <th ><%= week[j] %></th>
+                  <% } %>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <a href="#">
-                    <div class="monthnum">1</div>
-                    <div class="eventcontainer" id="1" onclick="getList(this)" data-toggle="modal" data-target="#Modal">
-                      <div class="event" id="777">egwgwgwgrhrehrehreherherhehe</div>
-                      <div class="event" id="743">egwgwgwg</div>
-                      <div class="event" id="727">egwgwgwgrhrehrehreherherhehe</div>
-                      <div class="event" id="347">egwgwgwg</div>
-                    </div>
-                    </a>
-                  </td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>9</td>
-                  <td>10</td>
-                  <td>11</td>
-                  <td>12</td>
-                  <td>13</td>
-                  <td>14</td>
-                </tr>
-                <tr>
-                  <td>15</td>
-                  <td>16</td>
-                  <td>17</td>
-                  <td>18</td>
-                  <td>19</td>
-                  <td>20</td>
-                  <td>21</td>
-                </tr>
-                <tr>
-                  <td>22</td>
-                  <td>23</td>
-                  <td>24</td>
-                  <td>25</td>
-                  <td>26</td>
-                  <td>27</td>
-                  <td>28</td>
-                </tr>
-                <tr>
-                  <td>29</td>
-                  <td>30</td>
-                  <td>31</td>
-                  <td>32</td>
-                  <td>33</td>
-                  <td>34</td>
-                  <td>35</td>
-                </tr>
+               <% var x;
+                var y;
+                var count = 0;
+                for (x=0;x < 5;x++){%>
+                  <tr>
+                    <% for(y=0;y < 7;y++){%>
+                    <td>
+                      <a href="#">
+                      <div class="monthnum"><%= count + 1%></div>
+                      <div class="eventcontainer" id="<%= curmonth +' '+(count + 1)+', '+year %>" onclick="getList(this)" data-toggle="modal" data-target="#Modal">
+                        <%
+                          if(calendar[count].length!=0){
+                            var i; %>
+                           <% for(i=0;i < calendar[count].length;i++){ %>
+                              <div class="event" id="<%= calendar[count][i].id %>"><%= calendar[count][i].content %></div>
+                           <% } }%>
+                      </div>
+                      </a>
+                    </td>
+                    <% if(count < days-1){count++; }else{ break; } } %>
+                  </tr>
+               <% }%>
               </tbody>
             </table>
           </div>
@@ -173,7 +132,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+        <h5 class="modal-title" >Add Event</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -207,7 +166,13 @@
       </div>
       <div class="modal-body">
         <div style="color: black;" class="container" id="eventdaycontainer">
-          
+          <form action="/updateEvent" method="post" id="updateEvent">
+            <input type="hidden" name="id" id="editid">
+            <input type="hidden" name="content" id="editcontent">
+          </form>
+          <form action="/deleteEvent" method="post" id="destroyEvent">
+            <input type="hidden" name="id" id="delid">
+          </form>
         </div>
       </div>
       <div class="modal-footer">
@@ -234,11 +199,12 @@
 
 
     function getList(elem){
+      var eventdate = document.getElementById("exampleModalLabel");
       var container = document.getElementById("eventdaycontainer");
       var containerchild = container.children;
       var childs = elem.children;
       var i;
-      
+      eventdate.innerHTML = elem.id;
 
         for(i=0;i<childs.length;i++){
           var div = document.createElement('div');
@@ -254,6 +220,7 @@
           edit.className = "eventdaybutton";
           deleteevent.className = "eventdaybutton";
           edit.setAttribute("onclick","editEvent(this.parentNode)");
+          deleteevent.setAttribute("onclick","deletemyEvent(this.parentNode)");
 
           div.appendChild(content);
           div.appendChild(deleteevent);
@@ -265,6 +232,7 @@
     }
 
     function editEvent(elem){
+      
       var childs = elem.children;
       var input = document.createElement('input');
       var save = document.createElement('button');
@@ -286,12 +254,23 @@
     }
     function saveEvent(elem){
       var childs = elem.children;
-      var content = document.createElement('div');
-      content.innerHTML = childs[0].value;
-      content.className = "divcon"; 
+      var editid = document.getElementById("editid");
+      var editcontent = document.getElementById("editcontent");
+      var updateEvent = document.getElementById("updateEvent");
+      editid.value = elem.id;
+      editcontent.value = childs[0].value;
+ 
 
-      childs[0].replaceWith(content);
-      changeEventButtons(elem);
+      updateEvent.submit();
+      
+    }
+
+    function deletemyEvent(elem){
+      var delEvent = document.getElementById("destroyEvent");
+      var delid= document.getElementById("delid");
+      delid.value = elem.id;
+      delEvent.submit();
+
     }
     function cancelEvent(elem,parent){
       var childs = parent.children;

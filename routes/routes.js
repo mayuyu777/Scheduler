@@ -10,6 +10,9 @@ router.get("/register",accountController.showregister);
 router.post("/signin",accountController.signin);
 router.post("/create_account",accountController.createAccount);
 router.post("/addEvent",noteController.addEvent);
+router.post("/updateEvent",noteController.updateEvent);
+router.post("/deleteEvent",noteController.deleteEvent);
+router.get("/logout",accountController.logout);
 router.get("/home",accountController.checkauth,noteController.home);
 
 
