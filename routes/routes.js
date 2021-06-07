@@ -12,8 +12,9 @@ router.post("/create_account",accountController.createAccount);
 router.post("/addEvent",noteController.addEvent);
 router.post("/updateEvent",noteController.updateEvent);
 router.post("/deleteEvent",noteController.deleteEvent);
-router.get("/home/:date",noteController.home);
+router.get("/home/:date",accountController.checkauth,noteController.home);
 router.get("/logout",accountController.logout);
+router.get("/profile",accountController.checkauth,accountController.profile);
 router.get("/home",accountController.checkauth,noteController.home);
 
 

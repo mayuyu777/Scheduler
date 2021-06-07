@@ -66,6 +66,12 @@ exports.signin = async(req,res)=>{
     
 }
 
+exports.profile = async(req,res,next)=>{
+
+    res.render("profile");
+    
+}
+
 
 exports.showlogin = async(req,res)=>{
     if(!req.session.uid){
@@ -82,6 +88,8 @@ exports.showregister = async(req,res)=>{
         res.redirect("/");
     }
 }
+
+
 
 exports.logout = async(req,res)=>{
     req.session.destroy();
