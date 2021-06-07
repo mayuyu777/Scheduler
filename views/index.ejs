@@ -81,7 +81,7 @@
         <div style="height: 90%;width: 98%;background-color:rgb(247, 247, 247);box-shadow: 1px 0px 6px rgba(36, 34, 34, 0.275);margin-left: 0.5pc;margin-top: 0.5pc;padding: 1pc;">
           <div style="height: 15%;padding-top: 25px;" class="container"> 
             <div class="row align-items-center">
-              <div class="col" style="margin-left: -1.5pc;margin-top: 1pc;"><button class="navbutton" id="<%= date %>" onclick="pageControl(this)"><i class="fas fa-chevron-left fa-lg navicon"></i></button><button class="navbutton" id="<%= date %>" onclick="pageControl(this)"><i class="fas fa-chevron-right fa-lg navicon"></i></button></div>
+              <div class="col" style="margin-left: -1.5pc;margin-top: 1pc;"><button class="navbutton" id="<%= date %>" onclick="pageControl(this,0)"><i class="fas fa-chevron-left fa-lg navicon"></i></button><button class="navbutton" id="<%= date %>" onclick="pageControl(this,1)"><i class="fas fa-chevron-right fa-lg navicon"></i></button></div>
               <div class="col" style="margin-left: -13pc;margin-top: -2pc;"><label style="font-size: 30px;font-weight: bold;color: rgba(0, 0, 0, 0.782);"><%= curmonth +" "+year%></label></div>
             </div>
           </div>
@@ -181,7 +181,7 @@
     </div>
   </div>
 </div>
-<form action="/pageControl" method="post" id="pageForm">
+<form action="/home" method="get" id="pageForm">
   <input type="hidden" name="month" id="page">
 </form>
 	<script src="js/jquery.min.js"></script>
@@ -305,12 +305,21 @@
       }
     }
 
-    function pageControl(elem){
+    function pageControl(elem,index){
       var pageform = document.getElementById("pageForm");
       var page = document.getElementById("page");
+     
+      var date = new Date(elem.id);
+      var month = date.getMonth();
+      var year =date.getFullYear();
+      month = (index==0)? month-1 : month+1;
+      if(month <0){ year--;}else if(month >11){year++};
+      month = month%12;
+      var newdate = new Date(year,month,1);
 
-      page.value = elem.id;
-      pageform.submit();
+      console.log("***************"+newdate);
+      page.value = newdate;
+     pageform.submit();
     }
 
     $(document).ready(function(){
