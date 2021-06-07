@@ -36,7 +36,7 @@
           <div class="p-2 menu" style="height: 4pc;margin-bottom: 0.5pc;"></div>
           <div class="p-2 menu menu_title">Events</div>
           <div class="p-2 menu active" id="home">
-            <a href="/home">
+            <a href="/">
             <div class="d-flex justify-content-start">
              <i class="fas fa-home fa-lg menu_icon"></i>
               <h6 class="menu_text">Home</h6>
@@ -81,7 +81,7 @@
         <div style="height: 90%;width: 98%;background-color:rgb(247, 247, 247);box-shadow: 1px 0px 6px rgba(36, 34, 34, 0.275);margin-left: 0.5pc;margin-top: 0.5pc;padding: 1pc;">
           <div style="height: 15%;padding-top: 25px;" class="container"> 
             <div class="row align-items-center">
-              <div class="col" style="margin-left: -1.5pc;margin-top: 1pc;"><button class="navbutton"><i class="fas fa-chevron-left fa-lg navicon"></i></button><button class="navbutton"><i class="fas fa-chevron-right fa-lg navicon"></i></button></div>
+              <div class="col" style="margin-left: -1.5pc;margin-top: 1pc;"><button class="navbutton" id="<%= date %>" onclick="pageControl(this)"><i class="fas fa-chevron-left fa-lg navicon"></i></button><button class="navbutton" id="<%= date %>" onclick="pageControl(this)"><i class="fas fa-chevron-right fa-lg navicon"></i></button></div>
               <div class="col" style="margin-left: -13pc;margin-top: -2pc;"><label style="font-size: 30px;font-weight: bold;color: rgba(0, 0, 0, 0.782);"><%= curmonth +" "+year%></label></div>
             </div>
           </div>
@@ -181,7 +181,9 @@
     </div>
   </div>
 </div>
-
+<form action="/pageControl" method="post" id="pageForm">
+  <input type="hidden" name="month" id="page">
+</form>
 	<script src="js/jquery.min.js"></script>
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -290,6 +292,7 @@
       edit.className = "eventdaybutton";
       deleteevent.className = "eventdaybutton";
       edit.setAttribute("onclick","editEvent(this.parentNode)");
+      deleteevent.setAttribute("onclick","deletemyEvent(this.parentNode)");
 
       childs[1].replaceWith(deleteevent);
       childs[2].replaceWith(edit);
@@ -300,6 +303,14 @@
       while (container.lastChild) {
         container.removeChild(container.lastChild);
       }
+    }
+
+    function pageControl(elem){
+      var pageform = document.getElementById("pageForm");
+      var page = document.getElementById("page");
+
+      page.value = elem.id;
+      pageform.submit();
     }
 
     $(document).ready(function(){

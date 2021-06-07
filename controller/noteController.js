@@ -43,11 +43,11 @@ exports.home = async(req,res)=>{
         var dayofweek = new Date(year,month-1,1).getDay();
         var days = daysInMonth (month, year);
         for(i=0;i<days;i++){
-            const query = "Select * from notes where  uid = '"+req.session.uid +"' and Month(date) = " + month+" and Day(date)= "+(i+1);
+            const query = "Select * from notes where  uid = '"+req.session.uid +"' and Month(date) = " + month+" and Day(date)= "+(i+1)+" and Year(date) = "+year;
             calendar[i] = await connection.sequelize.query(query, { type: QueryTypes.SELECT });
         }
        
-        res.render("index",{calendar: calendar, days:days,dayofweek:dayofweek,curmonth:months[month-1],year:year});
+        res.render("index",{calendar: calendar, days:days,dayofweek:dayofweek,curmonth:months[month-1],year:year,date:date});
     }else{
         res.redirect("/");
     }
@@ -56,4 +56,32 @@ exports.home = async(req,res)=>{
         return new Date(year, month, 0).getDate();
     }
     
+}
+
+exports.pageControl = async(req,res)=>{
+ 
+    if(req.session.uid){
+        var i;
+        var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+        var calendar={};
+        var date = req.body.id;
+        var month = date.getMonth();
+        var year = date.getFullYear();
+        var dayofweek = new Date(year,month-1,1).getDay();
+        var days = daysInMonth (month, year);
+        for(i=0;i<days;i++){
+            const query = "Select * from notes where  uid = '"+req.session.uid +"' and Month(date) = " + month+" and Day(date)= "+(i+1)+" and Year(date) = "+year;
+            calendar[i] = await connection.sequelize.query(query, { type: QueryTypes.SELECT });
+        }
+       
+        res.render("index",{calendar: calendar, days:days,dayofweek:dayofweek,curmonth:months[month-1],year:year,date:date});
+    }else{
+        res.redirect("/");
+    }
+
+    function daysInMonth (month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+    
+
 }

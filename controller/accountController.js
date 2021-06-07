@@ -36,7 +36,7 @@ exports.checkauth = async(req,res,next)=>{
 }
 
 exports.home = async(req,res,next)=>{
-    
+
     res.redirect("/home");
     
 }
