@@ -24,6 +24,8 @@
     .monthnum{text-align: right;font-size: 13px;color: rgba(0, 0, 0, 0.707);font-weight:900;}
     .navbutton{border: 1px solid rgba(128, 128, 128, 0.563);border-radius:3px; width: 50px;margin-left: 10px;}
     .navicon{color: rgba(0, 0, 0, 0.494);}
+    .profilebutton{margin-left: 7.2pc;width: 70px;border: none;border-radius: 3px;background-color: rgb(126, 126, 194);color: white;}
+    .savebutton{width: 70px;border: none;border-radius: 3px;background-color: rgb(126, 126, 194);color: white;}
   </style>
 
 	</head>
@@ -41,7 +43,7 @@
             </a>
           </div>
           <div class="p-2 menu" id="event">
-            <a href="#" onclick="addEvent()" data-toggle="modal" data-target="#exampleModal">
+            <a href="#"  data-toggle="modal" data-target="#exampleModal">
             <div class="d-flex justify-content-start">
              <i class="fas fa-plus fa-lg menu_icon"></i>
               <h6 class="menu_text">Add Event</h6>
@@ -82,7 +84,18 @@
             </div>
           </div>
           <div style="height: 85%;">
-           efwefew
+              <div style="background-color: rgb(233, 233, 236); height: 105%;margin-top: -1.5pc;padding-top: 5pc;">
+                  <form action="/updateAccount" method="POST" id="accountform">
+                    <center>
+                     <div><label for="" style="margin-right: 10px;">Full Name</label><input type="text" name="name" id="username" value="<%= name %>" disabled></div>
+                     <div><label for="" style="margin-right: 40px;">Email</label><input type="email" name="email" id="useremail" value="<%= email %>" disabled></div>
+                    </center>
+                  </form>
+                  <center>
+                    <button class="profilebutton" style="visibility: hidden;" id="cancel">Cancel</button>
+                    <button class="savebutton" onclick="editAccount(this)" id="save">Edit</button>
+                  </center>
+              </div>
           </div>
         </div>
       </div>
@@ -94,7 +107,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -128,6 +141,36 @@
     function closeModal(){
       document.getElementById("home").classList.add('active');
       document.getElementById("event").classList.remove('active');
+    }
+
+    function editAccount(elem){
+      var formemail = document.getElementById("useremail");
+      var formname = document.getElementById("username");
+      var cancelBtn = document.getElementById("cancel");
+      cancelBtn.style.visibility = "visible";
+      elem.innerHTML = "Save";
+      elem.setAttribute("onclick","saveAccount(this)");
+      cancelBtn.setAttribute("onclick","cancelEdit(this)");
+      formemail.disabled = false;
+      formname.disabled = false;
+
+     
+    }
+    function cancelEdit(elem){
+      var cancelB = document.getElementById("cancel");
+      var saveB = document.getElementById("save");
+      var formemail = document.getElementById("useremail");
+      var formname = document.getElementById("username");
+      cancelB.style.visibility = "hidden";
+      saveB.innerHTML = "Edit";
+      saveB.setAttribute("onclick","editAccount(this)");
+      formemail.disabled = true;
+      formname.disabled = true;
+
+    }
+    function saveAccount(elem){
+      var pageform = document.getElementById("accountform");
+      pageform.submit();
     }
   </script>
 	</body>

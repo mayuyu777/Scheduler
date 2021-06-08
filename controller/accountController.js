@@ -68,7 +68,35 @@ exports.signin = async(req,res)=>{
 
 exports.profile = async(req,res,next)=>{
 
-    res.render("profile");
+    await account.model.findOne({
+        where:{
+            uid: req.session.uid
+        }
+    }).then((data)=>{
+
+        res.render("profile",{name:data.name,email:data.email});
+        
+    }).catch(function(err){
+        console.log(err);
+    })
+    
+}
+
+exports.updateAccount= async(req,res,next)=>{
+
+    await account.model.update({
+        email: req.body.email,
+        name:req.body.name},
+        {where:{
+            uid: req.session.uid
+        }
+    }).then((data)=>{
+
+      res.redirect("/");
+        
+    }).catch(function(err){
+        console.log(err);
+    })
     
 }
 
