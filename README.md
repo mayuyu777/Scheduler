@@ -1,4 +1,4 @@
 # Scheduler
 
-Authors: Natalie Sagnoy
+Authors: Natalie Sagnoy and
          Leah Bancale
