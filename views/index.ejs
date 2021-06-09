@@ -143,7 +143,7 @@
          <h6>Content</h6><textarea name="content" id="content" cols="30" rows="5"></textarea>
          <br><label style="margin-right:10px">Date</label><input type="date" name="date" id="date">
          <br><label style="margin-right:10px">Time</label><input type="time" name="time" id="time">
-        <input type="hidden" name="curDate" class="curDate">
+        <input type="hidden" name="curDate" class="curDate" value="">
         </div>
       </div>
       <div class="modal-footer">
@@ -169,11 +169,11 @@
           <form action="/updateEvent" method="post" id="updateEvent">
             <input type="hidden" name="id" id="editid">
             <input type="hidden" name="content" id="editcontent">
-            <input type="hidden" name="curDate" class="curDate">
+            <input type="hidden" name="curDate" class="curDate" value="">
           </form>
           <form action="/deleteEvent" method="post" id="destroyEvent">
             <input type="hidden" name="id" id="delid">
-            <input type="hidden" name="curDate" class="curDate">
+            <input type="hidden" name="curDate" class="curDate" value="">
           </form>
         </div>
       </div>

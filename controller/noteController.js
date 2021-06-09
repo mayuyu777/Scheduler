@@ -10,7 +10,13 @@ exports.addEvent = async(req,res)=>{
     await note.model.create(
         req.body
     ).then(()=>{
-        res.redirect("/home"+"?month="+req.body.curDate);
+        if(req.body.curDate == ''){
+            res.redirect("/");
+            
+        }else{
+            res.redirect("/home"+"?month="+req.body.curDate);
+        }
+        
     }).catch(function(err){
         console.log(err);
         res.redirect("/");
