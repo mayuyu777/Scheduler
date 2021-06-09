@@ -43,7 +43,7 @@
             </div>
             </a>
           </div>
-          <div class="p-2 menu" id="event">
+          <div class="p-2 menu" id="event" onclick="initDate()">
             <a href="#" data-toggle="modal" data-target="#exampleModal">
             <div class="d-flex justify-content-start">
              <i class="fas fa-plus fa-lg menu_icon"></i>
@@ -143,7 +143,7 @@
          <h6>Content</h6><textarea name="content" id="content" cols="30" rows="5"></textarea>
          <br><label style="margin-right:10px">Date</label><input type="date" name="date" id="date">
          <br><label style="margin-right:10px">Time</label><input type="time" name="time" id="time">
-        
+        <input type="hidden" name="curDate" class="curDate">
         </div>
       </div>
       <div class="modal-footer">
@@ -169,9 +169,11 @@
           <form action="/updateEvent" method="post" id="updateEvent">
             <input type="hidden" name="id" id="editid">
             <input type="hidden" name="content" id="editcontent">
+            <input type="hidden" name="curDate" class="curDate">
           </form>
           <form action="/deleteEvent" method="post" id="destroyEvent">
             <input type="hidden" name="id" id="delid">
+            <input type="hidden" name="curDate" class="curDate">
           </form>
         </div>
       </div>
@@ -192,6 +194,17 @@
   <script src="js/main.js"></script>
   <script>
   
+    function initDate(){
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const CurDate = urlParams.get("month");
+      var dateInput = document.getElementsByClassName('curDate');
+      dateInput[0].value = CurDate;
+      dateInput[1].value = CurDate;
+      dateInput[2].value = CurDate;
+      console.log(CurDate);
+    }
+
     function addEvent(){
       document.getElementById("event").classList.add('active');
       document.getElementById("home").classList.remove('active');
@@ -232,6 +245,7 @@
           container.appendChild(div);
         
       }
+      initDate();
       console.log(childs[0].textContent); 
     }
 

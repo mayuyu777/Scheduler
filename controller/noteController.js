@@ -10,7 +10,7 @@ exports.addEvent = async(req,res)=>{
     await note.model.create(
         req.body
     ).then(()=>{
-        res.redirect("/");
+        res.redirect("/home"+"?month="+req.body.curDate);
     }).catch(function(err){
         console.log(err);
         res.redirect("/");
@@ -21,7 +21,7 @@ exports.updateEvent = async(req,res)=>{
  
     const query = "Update notes SET content = '"+ req.body.content+"' where id ='"+req.body.id+"'";
     await connection.sequelize.query(query, { type: QueryTypes.UPDATE });
-    res.redirect("/");
+    res.redirect("/home"+"?month="+req.body.curDate);
 
 }
 
@@ -29,7 +29,7 @@ exports.deleteEvent = async(req,res)=>{
  
     const query = "Delete from notes where id ='"+req.body.id+"'";
     await connection.sequelize.query(query, { type: QueryTypes.DELETE });
-    res.redirect("/");
+    res.redirect("/home"+"?month="+req.body.curDate);
 
 }
 
